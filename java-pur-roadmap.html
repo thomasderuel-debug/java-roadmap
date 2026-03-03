@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Java Pur</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Clash+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #f5f0e8;
+  --paper: #faf7f2;
+  --ink: #1a1a2e;
+  --ink-light: #4a4a6a;
+  --rule: #d4cfc4;
+  --w1: #e63946;
+  --w2: #e07a00;
+  --w3: #2a9d8f;
+  --w4: #2563eb;
+  --w5: #7c3aed;
+  --w6: #16a34a;
+  --done: #c8c4bc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* Texture paper */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23c4bfb4' fill-opacity='0.4'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 50px 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER */
+header {
+  border: 2px solid var(--ink);
+  padding: 36px 40px;
+  margin-bottom: 48px;
+  position: relative;
+  background: var(--paper);
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 4px; left: 4px; right: -4px; bottom: -4px;
+  border: 2px solid var(--ink);
+  z-index: -1;
+}
+
+.header-tag {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 6vw, 60px);
+  line-height: 1.05;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+h1 em {
+  font-style: normal;
+  border-bottom: 4px solid var(--w1);
+}
+
+.header-meta {
+  font-size: 11px;
+  color: var(--ink-light);
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+/* PROGRESS BAR */
+.progress-section {
+  margin-bottom: 40px;
+}
+
+.progress-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--w1), var(--w2), var(--w3), var(--w4), var(--w5), var(--w6));
+  width: 0%;
+  transition: width 1.2s ease;
+}
+
+/* WEEK BLOCK */
+.week {
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.week:nth-child(1) { animation-delay: 0.05s; }
+.week:nth-child(2) { animation-delay: 0.1s; }
+.week:nth-child(3) { animation-delay: 0.15s; }
+.week:nth-child(4) { animation-delay: 0.2s; }
+.week:nth-child(5) { animation-delay: 0.25s; }
+.week:nth-child(6) { animation-delay: 0.3s; }
+.week:nth-child(7) { animation-delay: 0.35s; }
+.week:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.week-inner {
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  min-height: 120px;
+}
+
+.week-label {
+  border-right: 1.5px solid var(--ink);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.week-num {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.week-tag {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  color: white;
+}
+
+.week-body {
+  padding: 18px 22px;
+}
+
+.week-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.topic {
+  font-size: 10px;
+  padding: 3px 10px;
+  border: 1px solid;
+  letter-spacing: 0.5px;
+  cursor: default;
+  transition: transform 0.15s;
+}
+
+.topic:hover { transform: translateY(-1px); }
+
+.resources-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+}
+
+.res-link {
+  font-size: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.res-link:hover {
+  border-bottom-color: var(--ink);
+}
+
+.res-link::before {
+  content: '→';
+  font-size: 10px;
+}
+
+/* CHECKBOX */
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.check-btn {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+  background: transparent;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  font-size: 10px;
+}
+
+.check-btn.done {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.check-label {
+  font-size: 10px;
+  color: var(--ink-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* MILESTONE */
+.milestone {
+  margin: 8px 0 32px;
+  padding: 14px 20px;
+  border: 1.5px dashed var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--paper);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.milestone-icon { font-size: 18px; }
+.milestone strong { font-weight: 700; }
+
+/* COLORS per week */
+.c1 { color: var(--w1); border-color: var(--w1); }
+.c2 { color: var(--w2); border-color: var(--w2); }
+.c3 { color: var(--w3); border-color: var(--w3); }
+.c4 { color: var(--w4); border-color: var(--w4); }
+.c5 { color: var(--w5); border-color: var(--w5); }
+.c6 { color: var(--w6); border-color: var(--w6); }
+
+.bg1 { background: var(--w1); }
+.bg2 { background: var(--w2); }
+.bg3 { background: var(--w3); }
+.bg4 { background: var(--w4); }
+.bg5 { background: var(--w5); }
+.bg6 { background: var(--w6); }
+
+.border1 { border-left: 4px solid var(--w1); }
+.border2 { border-left: 4px solid var(--w2); }
+.border3 { border-left: 4px solid var(--w3); }
+.border4 { border-left: 4px solid var(--w4); }
+.border5 { border-left: 4px solid var(--w5); }
+.border6 { border-left: 4px solid var(--w6); }
+
+/* FOOTER */
+footer {
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-msg {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+}
+
+.footer-note {
+  font-size: 10px;
+  color: var(--ink-light);
+}
+
+@media (max-width: 600px) {
+  .week-inner { grid-template-columns: 70px 1fr; }
+  .week-label { padding: 12px 8px; }
+  .week-num { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-tag">// Roadmap · Java Pur · Rookie → Prêt pour Spring</div>
+    <h1>Maîtriser<br><em>Java</em> de zéro</h1>
+    <div class="header-meta">
+      <span>⏱ 8 semaines</span>
+      <span>📅 ~1h30/jour</span>
+      <span>🎯 Prêt pour Spring Boot après</span>
+      <span>💰 100% gratuit</span>
+    </div>
+  </header>
+
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>PROGRESSION</span>
+      <span id="pct">0 / 8 semaines</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 1 -->
+  <div class="week">
+    <div class="week-inner border1">
+      <div class="week-label">
+        <div class="week-num c1">01</div>
+        <div class="week-tag bg1">Bases</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Environnement & Syntaxe de base</div>
+        <div class="topics">
+          <span class="topic c1">Installer JDK + IntelliJ</span>
+          <span class="topic c1">Variables & types</span>
+          <span class="topic c1">Conditions if/else</span>
+          <span class="topic c1">Boucles for/while</span>
+          <span class="topic c1">Méthodes</span>
+          <span class="topic c1">Hello World !</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://codegym.cc/fr" target="_blank">CodeGym.cc (niveaux 1–5)</a>
+          <a class="res-link" href="https://www.codecademy.com/learn/learn-java" target="_blank">Codecademy Java</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 1)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 2 -->
+  <div class="week">
+    <div class="week-inner border2">
+      <div class="week-label">
+        <div class="week-num c2">02</div>
+        <div class="week-tag bg2">POO I</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Classes, Objets & Constructeurs</div>
+        <div class="topics">
+          <span class="topic c2">Classes & objets</span>
+          <span class="topic c2">Attributs & méthodes</span>
+          <span class="topic c2">Constructeurs</span>
+          <span class="topic c2">this</span>
+          <span class="topic c2">Encapsulation</span>
+          <span class="topic c2">getters/setters</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://java-programming.mooc.fi/part-4" target="_blank">MOOC Helsinki — Part 4</a>
+          <a class="res-link" href="https://codegym.cc/fr" target="_blank">CodeGym niveaux 6–10</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 2)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 3 -->
+  <div class="week">
+    <div class="week-inner border2">
+      <div class="week-label">
+        <div class="week-num c2">03</div>
+        <div class="week-tag bg2">POO II</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Héritage, Interfaces & Polymorphisme</div>
+        <div class="topics">
+          <span class="topic c2">extends / super</span>
+          <span class="topic c2">abstract</span>
+          <span class="topic c2">interface</span>
+          <span class="topic c2">implements</span>
+          <span class="topic c2">Polymorphisme</span>
+          <span class="topic c2">Override</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://java-programming.mooc.fi/part-9" target="_blank">MOOC Helsinki — Part 9</a>
+          <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/IandI/index.html" target="_blank">Oracle : Interfaces & Inheritance</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 3)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <span class="milestone-icon">🏁</span>
+    <span><strong>Checkpoint 1 :</strong> Tu comprends la POO. Crée une mini-app console (ex: gestion d'une bibliothèque) avant de continuer.</span>
+  </div>
+
+  <!-- SEMAINE 4 -->
+  <div class="week">
+    <div class="week-inner border3">
+      <div class="week-label">
+        <div class="week-num c3">04</div>
+        <div class="week-tag bg3">Collections</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Collections & Generics</div>
+        <div class="topics">
+          <span class="topic c3">ArrayList / LinkedList</span>
+          <span class="topic c3">HashMap / HashSet</span>
+          <span class="topic c3">Iterator</span>
+          <span class="topic c3">Generics &lt;T&gt;</span>
+          <span class="topic c3">Comparable / Comparator</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://java-programming.mooc.fi/part-6" target="_blank">MOOC Helsinki — Part 6</a>
+          <a class="res-link" href="https://www.baeldung.com/java-collections" target="_blank">Baeldung — Java Collections</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 4)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 5 -->
+  <div class="week">
+    <div class="week-inner border3">
+      <div class="week-label">
+        <div class="week-num c3">05</div>
+        <div class="week-tag bg3">Exceptions</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Exceptions & Gestion des erreurs</div>
+        <div class="topics">
+          <span class="topic c3">try / catch / finally</span>
+          <span class="topic c3">throw / throws</span>
+          <span class="topic c3">Checked vs Unchecked</span>
+          <span class="topic c3">Custom exceptions</span>
+          <span class="topic c3">try-with-resources</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://docs.oracle.com/javase/tutorial/essential/exceptions/" target="_blank">Oracle — Exceptions tutorial</a>
+          <a class="res-link" href="https://www.baeldung.com/java-exceptions" target="_blank">Baeldung — Java Exceptions</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 5)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 6 -->
+  <div class="week">
+    <div class="week-inner border4">
+      <div class="week-label">
+        <div class="week-num c4">06</div>
+        <div class="week-tag bg4">Java 8+</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Lambdas, Streams & Optional</div>
+        <div class="topics">
+          <span class="topic c4">Lambda expressions</span>
+          <span class="topic c4">Functional interfaces</span>
+          <span class="topic c4">Stream API</span>
+          <span class="topic c4">filter / map / reduce</span>
+          <span class="topic c4">Optional</span>
+          <span class="topic c4">Method references</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://www.baeldung.com/java-8-streams" target="_blank">Baeldung — Java 8 Streams</a>
+          <a class="res-link" href="https://www.baeldung.com/java-optional" target="_blank">Baeldung — Optional</a>
+          <a class="res-link" href="https://www.youtube.com/watch?v=t1-YZ6bF-g0" target="_blank">YouTube — Streams en 1h</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 6)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <span class="milestone-icon">🏁</span>
+    <span><strong>Checkpoint 2 :</strong> Résous 10 exercices Exercism en utilisant uniquement les Streams. Pas de boucles for !</span>
+  </div>
+
+  <!-- SEMAINE 7 -->
+  <div class="week">
+    <div class="week-inner border5">
+      <div class="week-label">
+        <div class="week-num c5">07</div>
+        <div class="week-tag bg5">Outillage</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Git, Maven & Tests unitaires</div>
+        <div class="topics">
+          <span class="topic c5">Git init / commit / push</span>
+          <span class="topic c5">Branches & merge</span>
+          <span class="topic c5">Maven / pom.xml</span>
+          <span class="topic c5">JUnit 5 basics</span>
+          <span class="topic c5">@Test / @BeforeEach</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://learngitbranching.js.org/?locale=fr_FR" target="_blank">LearnGitBranching (interactif)</a>
+          <a class="res-link" href="https://maven.apache.org/guides/getting-started/" target="_blank">Maven Getting Started</a>
+          <a class="res-link" href="https://www.baeldung.com/junit-5" target="_blank">Baeldung — JUnit 5</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 7)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAINE 8 -->
+  <div class="week">
+    <div class="week-inner border6">
+      <div class="week-label">
+        <div class="week-num c6">08</div>
+        <div class="week-tag bg6">Projet</div>
+      </div>
+      <div class="week-body">
+        <div class="week-title">Projet final console — tout consolider</div>
+        <div class="topics">
+          <span class="topic c6">App console complète</span>
+          <span class="topic c6">POO appliquée</span>
+          <span class="topic c6">Collections & Streams</span>
+          <span class="topic c6">Gestion exceptions</span>
+          <span class="topic c6">Tests JUnit</span>
+          <span class="topic c6">Git push sur GitHub</span>
+        </div>
+        <div class="resources-row">
+          <a class="res-link" href="https://exercism.org/tracks/java" target="_blank">Exercism — Java track</a>
+          <a class="res-link" href="https://www.codingbat.com/java" target="_blank">CodingBat — exercices ciblés</a>
+        </div>
+        <div class="check-row">
+          <div class="check-btn" onclick="toggleCheck(this, 8)"></div>
+          <span class="check-label">Marquer comme terminé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="milestone" style="border-color: var(--w6); border-width: 2px;">
+    <span class="milestone-icon">🚀</span>
+    <span><strong>Tu es prêt pour Spring Boot !</strong> Ton projet console est sur GitHub = ton premier portfolio.</span>
+  </div>
+
+  <footer>
+    <div class="footer-msg">8 semaines. 1 projet. Prêt.</div>
+    <div class="footer-note">Pratique quotidienne recommandée : 1h30 min/jour</div>
+  </footer>
+
+</div>
+
+<script>
+  const state = {};
+
+  function toggleCheck(el, week) {
+    state[week] = !state[week];
+    el.classList.toggle('done', state[week]);
+    el.textContent = state[week] ? '✓' : '';
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = Object.values(state).filter(Boolean).length;
+    const total = 8;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('pct').textContent = done + ' / ' + total + ' semaines';
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('progressFill').style.width = '0%';
+    }, 300);
+  });
+</script>
+</body>
+</html>
